@@ -15,6 +15,7 @@ fun AppNavHost(viewModel: SymptomViewModel) {
         composable("dashboard") {
             HomeScreen(navController = navController)
         }
+        composable("selectLocation") { LocationSelectionScreen(navController) }
         composable("reportSymptoms") {
             ReportSymptomsScreen(viewModel = viewModel, navController = navController)
         }

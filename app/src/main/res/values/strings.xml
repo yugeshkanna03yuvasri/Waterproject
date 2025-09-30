@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">Water Monitoring System</string>
+    <string name="asha_worker">ASHA Worker</string>
+    <string name="phc">PHC</string>
+    <string name="doctor">Doctor</string>
+    <string name="no_contacts_found">No contacts found for %1$s</string>
+    <string name="call">Call</string>
+    <string name="explore_initiatives">Explore Our Initiatives</string>
+    <string name="jal_jeevan_mission">Jal Jeevan \nMission</string>
+    <string name="jal_shakti_abhiyan">Jal Shakti \nAbhiyan</string>
+    <string name="swachh_bharat_abhiyan">Swachh Bharat \nAbhiyan</string>
+    <string name="national_water_mission">National Water \nMission</string>
+
+    <string name="app_utilities">App Utilities</string>
+    <string name="report_a_case">Report a Case</string>
+    <string name="sensor_data">Sensor Data</string>
+    <string name="water_report">Water Report</string>
+    <string name="learn_and_prevent">Learn &amp; Prevent</string>
+
+    <string name="select_your_village">Select your village</string>
+    <string name="ai">AI</string>
+    <string name="language">Language</string>
+    <string name="profile">Profile</string>
+    <string name="app_title">JeevanRaksha Jal</string>
+    <string name="tagline">Proactive Health Monitoring for a Safer Future</string>
+    <string name="subtitle">Safe Water, Healthy lives</string>
+    <string name="learn_more">Learn More</string>
+    <string name="health_contacts_for">Health Contacts for %1$s</string>
+
 </resources>

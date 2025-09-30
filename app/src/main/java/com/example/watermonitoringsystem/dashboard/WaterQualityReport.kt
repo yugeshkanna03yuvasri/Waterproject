@@ -13,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -168,20 +167,6 @@ fun WaterQualityReportScreen(navController: NavController) {
                         unfocusedTextColor = Color.Black
                     )
                 )
-//                ExposedDropdownMenu(
-//                    expanded = expanded,
-//                    onDismissRequest = { expanded = false }
-//                ) {
-//                    regionReports.keys.forEach { region ->
-//                        DropdownMenuItem(
-//                            text = { Text(region) },
-//                            onClick = {
-//                                selectedRegion = region
-//                                expanded = false
-//                            }
-//                        )
-//                    }
-//                }
                 ExposedDropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },

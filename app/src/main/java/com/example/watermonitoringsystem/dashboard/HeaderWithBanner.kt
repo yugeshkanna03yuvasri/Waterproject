@@ -1,5 +1,6 @@
 package com.example.watermonitoringsystem.dashboard
 
+import android.app.Activity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.animateFloatAsState
@@ -13,42 +14,51 @@ import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Language
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.SmartToy
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.watermonitoringsystem.R
+import com.example.watermonitoringsystem.dashboard.LocaleHelper.saveLanguage
+import com.example.watermonitoringsystem.datamodel.Village
+// Assuming getSavedVillage is an extension function or in the same package/imported correctly
 
+@Composable
+fun getCurrentLangCode(): String {
+    // Get the current configuration and locale from the Compose context
+    val configuration = LocalConfiguration.current
+
+    // Attempt to get the language tag from the first locale (primary language)
+    // Returns "en" for English, "hi" for Hindi, etc.
+    return configuration.locales.get(0).language
+}
 
 @Composable
 fun HealthBannerContent(navController: NavController) {
-    var selectedLocation by remember { mutableStateOf("Assam") }
-    var expandedLocation by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+    val activity = context as? Activity
+
+    var savedVillage by remember { mutableStateOf<Village?>(null) }
     var expandedLanguage by remember { mutableStateOf(false) }
 
-    val northeastStates = listOf(
-        "Assam", "Manipur", "Meghalaya", "Mizoram",
-        "Nagaland", "Tripura", "Arunachal Pradesh", "Sikkim"
-    )
-    val languages = listOf(
-        "English", "Hindi", "Assamese", "Meitei",
-        "Nagamese", "Tripuri", "Nepali", "Khasi"
-    )
+    // --- NEW: Get current language code for dynamic content translation ---
+    val currentLangCode = getCurrentLangCode()
+    // ---------------------------------------------------------------------
 
-    // Animation for headline
+    LaunchedEffect(Unit) {
+        savedVillage = getSavedVillage(context)
+    }
+
     var animate by remember { mutableStateOf(false) }
     val scale by animateFloatAsState(
         targetValue = if (animate) 1f else 0.95f,
@@ -60,7 +70,7 @@ fun HealthBannerContent(navController: NavController) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(350.dp)
+            .height(360.dp)
             .background(
                 Brush.verticalGradient(
                     listOf(
@@ -75,70 +85,81 @@ fun HealthBannerContent(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(horizontal = 16.dp, vertical = 24.dp)
+                .padding(horizontal = 16.dp, vertical = 28.dp)
         ) {
-            // 🔝 Top bar: Location + Language + Profile
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                // 📍 Location dropdown
-                Box {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                        modifier = Modifier.clickable { expandedLocation = true }
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.LocationOn,
-                            contentDescription = "Location",
-                            tint = Color.Red
-                        )
-                        Spacer(modifier = Modifier.width(6.dp))
-                        Text(
-                            text = selectedLocation,
-                            color = Color.White,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        )
-                        Text(" ▼", color = Color.White)
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable {
+                        navController.navigate("selectLocation")
                     }
+                ) {
+                    Icon(
+                        Icons.Default.LocationOn,
+                        contentDescription = stringResource(R.string.select_your_village),
+                        tint = Color.White
+                    )
+                    Spacer(modifier = Modifier.width(6.dp))
+                    Column {
+                        if (savedVillage != null) {
 
-                    DropdownMenu(
-                        expanded = expandedLocation,
-                        onDismissRequest = { expandedLocation = false },
-                        modifier = Modifier
-                            .background(Color.White)
-                            .width(180.dp)
-                    ) {
-                        northeastStates.forEach { state ->
-                            DropdownMenuItem(
-                                text = { Text(state, color = Color.Black) },
-                                onClick = {
-                                    selectedLocation = state
-                                    expandedLocation = false
-                                }
+                            // --- REQUIRED CHANGE: Retrieve the localized village name ---
+                            val villageName = savedVillage!!.village[currentLangCode]
+                                ?: savedVillage!!.village["en"]
+                                ?: savedVillage!!.village.values.firstOrNull()
+                                ?: ""
+
+                            // --- REQUIRED CHANGE: Retrieve the localized district/state ---
+                            val districtName = savedVillage!!.district[currentLangCode]
+                                ?: savedVillage!!.district["en"]
+                                ?: ""
+                            val stateName = savedVillage!!.state[currentLangCode]
+                                ?: savedVillage!!.state["en"]
+                                ?: ""
+
+                            Text(
+                                // Use the localized village name
+                                text = villageName,
+                                color = Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 16.sp,
+                                maxLines = 1
+                            )
+                            Text(
+                                // Use the localized district and state names
+                                text = "$districtName, $stateName",
+                                color = Color.White.copy(alpha = 0.8f),
+                                fontSize = 14.sp,
+                                maxLines = 1
+                            )
+                        } else {
+                            Text(
+                                text = stringResource(R.string.select_your_village),
+                                color = Color.White,
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Medium
                             )
                         }
                     }
                 }
 
-                // 🌐 Language + 👤 Profile
                 Row(verticalAlignment = Alignment.CenterVertically) {
-                    // Language dropdown
                     IconButton(onClick = { navController.navigate("ai") }) {
                         Icon(
-                            imageVector = Icons.Default.SmartToy,
-                            contentDescription = "AI",
+                            Icons.Default.SmartToy,
+                            contentDescription = stringResource(R.string.ai),
                             tint = Color.White
                         )
                     }
                     Box {
-
                         IconButton(onClick = { expandedLanguage = true }) {
                             Icon(
-                                imageVector = Icons.Default.Language,
-                                contentDescription = "Language",
+                                Icons.Default.Language,
+                                contentDescription = stringResource(R.string.language),
                                 tint = Color.White
                             )
                         }
@@ -149,82 +170,101 @@ fun HealthBannerContent(navController: NavController) {
                                 .background(Color.White)
                                 .width(160.dp)
                         ) {
-                            languages.forEach { lang ->
+                            listOf(
+                                "English",
+                                "Hindi",
+                                "Assamese",
+                                "Khasi",
+                                "Manipuri",
+                                "Meitei",
+                                "Nepali"
+                            ).forEach { lang ->
                                 DropdownMenuItem(
                                     text = { Text(lang, color = Color.Black) },
                                     onClick = {
                                         expandedLanguage = false
-                                        // TODO: Handle language change
+                                        if (activity != null) {
+                                            when (lang) {
+                                                "Hindi" -> {
+                                                    saveLanguage(activity, "hi")
+                                                    activity.recreate()
+                                                }
+                                                "English" -> {
+                                                    saveLanguage(activity, "en")
+                                                    activity.recreate()
+                                                }
+                                                // Handle other languages similarly
+                                            }
+                                        }
                                     }
                                 )
                             }
                         }
                     }
-
-                    // Profile icon
-                    IconButton(onClick = { navController.navigate("profile")}) {
+                    IconButton(onClick = { navController.navigate("profile") }) {
                         Icon(
-                            imageVector = Icons.Default.AccountCircle,
-                            contentDescription = "Profile",
+                            Icons.Default.AccountCircle,
+                            contentDescription = stringResource(R.string.profile),
                             tint = Color.White
                         )
                     }
                 }
             }
 
-            Spacer(modifier = Modifier.height(25.dp))
-            Text(
-                text = "JeevanRaksha Jal",
-                color = Color.White,
-                fontWeight = FontWeight.Bold,
-                fontSize = 24.sp,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
-            )
-            Spacer(modifier = Modifier.height(15.dp))
+            Spacer(modifier = Modifier.height(40.dp))
 
-            // 🎯 Headline + Subheading + CTA
             AnimatedVisibility(visible = true) {
-
-
-                Column(
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .scale(scale),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    Text(
-                        text = "Proactive Health Monitoring for a Safer Future",
-                        style = MaterialTheme.typography.headlineSmall.copy(
-                            color = Color(0xFFDDECE3),
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.Bold
-                        ),
-                        modifier = Modifier.padding(start = 24.dp)
-                    )
-                    //Spacer(modifier = Modifier.height(5.dp))
-                    Text(
-                        text = "Safe Water, Healthy lives",
-                        style = MaterialTheme.typography.bodyLarge.copy(color = Color(0xFFDDECE3), fontSize = 16.sp, fontWeight = FontWeight.Bold),
-                        modifier = Modifier.padding(start = 24.dp)
-                    )
-                    Spacer(modifier = Modifier.height(30.dp))
-                    Button(
-                        onClick = { /* TODO: Navigate to Learn More */ },
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
-                        modifier = Modifier
-                            .height(48.dp)
-                            .width(160.dp),
-                        shape = RoundedCornerShape(24.dp)
+                    Column(
+                        modifier = Modifier.scale(scale),
+                        horizontalAlignment = Alignment.CenterHorizontally
                     ) {
                         Text(
-                            "Learn More",
-                            color = Color(0xFF1565C0),
-                            fontWeight = FontWeight.Bold
+                            text = stringResource(R.string.app_title),
+                            color = Color.White,
+                            fontWeight = FontWeight.Bold,
+                            fontSize = 22.sp
                         )
+                        Spacer(modifier = Modifier.height(12.dp))
+                        Text(
+                            text = stringResource(R.string.tagline),
+                            style = MaterialTheme.typography.bodyLarge.copy(
+                                color = Color(0xFFDDECE3),
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(horizontal = 24.dp)
+                        )
+                        Text(
+                            text = stringResource(R.string.subtitle),
+                            style = MaterialTheme.typography.bodyMedium.copy(
+                                color = Color(0xFFDDECE3),
+                                fontSize = 14.sp,
+                                fontWeight = FontWeight.Bold
+                            ),
+                            modifier = Modifier.padding(horizontal = 24.dp)
+                        )
+                        Spacer(modifier = Modifier.height(30.dp))
+                        Button(
+                            onClick = { /* TODO: Navigate to Learn More */ },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+                            modifier = Modifier
+                                .height(48.dp)
+                                .width(160.dp),
+                            shape = RoundedCornerShape(24.dp)
+                        ) {
+                            Text(
+                                stringResource(R.string.learn_more),
+                                color = Color(0xFF1565C0),
+                                fontWeight = FontWeight.Bold
+                            )
+                        }
                     }
                 }
             }
         }
     }
 }
-

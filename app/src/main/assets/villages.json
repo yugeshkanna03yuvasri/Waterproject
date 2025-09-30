@@ -1,0 +1,170 @@
+[
+  {
+    "state": { "en": "Assam", "hi": "असम" },
+    "district": { "en": "Kamrup", "hi": "कामरूप" },
+    "village": { "en": "Rangia", "hi": "रंगिया" },
+    "lat": 26.326,
+    "lng": 91.645
+  },
+  {
+    "state": { "en": "Assam", "hi": "असम" },
+    "district": { "en": "Kamrup", "hi": "कामरूप" },
+    "village": { "en": "Changsari", "hi": "चांगसारी" },
+    "lat": 26.215,
+    "lng": 91.591
+  },
+  {
+    "state": { "en": "Assam", "hi": "असम" },
+    "district": { "en": "Dibrugarh", "hi": "डिब्रूगढ़" },
+    "village": { "en": "Naharkatia", "hi": "नाहरकटिया" },
+    "lat": 27.289,
+    "lng": 95.342
+  },
+  {
+    "state": { "en": "Assam", "hi": "असम" },
+    "district": { "en": "Jorhat", "hi": "जोरहाट" },
+    "village": { "en": "Titabor", "hi": "तिताबोर" },
+    "lat": 26.616,
+    "lng": 94.203
+  },
+  {
+    "state": { "en": "Manipur", "hi": "मणिपुर" },
+    "district": { "en": "Imphal West", "hi": "इंफाल पश्चिम" },
+    "village": { "en": "Lamphelpat", "hi": "लम्फेलपत" },
+    "lat": 24.817,
+    "lng": 93.935
+  },
+  {
+    "state": { "en": "Manipur", "hi": "मणिपुर" },
+    "district": { "en": "Imphal East", "hi": "इंफाल पूर्व" },
+    "village": { "en": "Porompat", "hi": "पोरोमपत" },
+    "lat": 24.804,
+    "lng": 93.966
+  },
+  {
+    "state": { "en": "Manipur", "hi": "मणिपुर" },
+    "district": { "en": "Thoubal", "hi": "थोउबल" },
+    "village": { "en": "Lilong", "hi": "लिलोंग" },
+    "lat": 24.642,
+    "lng": 93.906
+  },
+  {
+    "state": { "en": "Meghalaya", "hi": "मेघालय" },
+    "district": { "en": "East Khasi Hills", "hi": "पूर्वी खासी हिल्स" },
+    "village": { "en": "Sohra", "hi": "सोहरा" },
+    "lat": 25.266,
+    "lng": 91.733
+  },
+  {
+    "state": { "en": "Meghalaya", "hi": "मेघालय" },
+    "district": { "en": "West Garo Hills", "hi": "पश्चिमी गारो हिल्स" },
+    "village": { "en": "Tura", "hi": "तुरा" },
+    "lat": 25.514,
+    "lng": 90.203
+  },
+  {
+    "state": { "en": "Meghalaya", "hi": "मेघालय" },
+    "district": { "en": "Jaintia Hills", "hi": "जयंतिया हिल्स" },
+    "village": { "en": "Jowai", "hi": "जोवाई" },
+    "lat": 25.452,
+    "lng": 92.207
+  },
+  {
+    "state": { "en": "Nagaland", "hi": "नागालैंड" },
+    "district": { "en": "Kohima", "hi": "कोहिमा" },
+    "village": { "en": "Zakhama", "hi": "ज़खामा" },
+    "lat": 25.586,
+    "lng": 94.121
+  },
+  {
+    "state": { "en": "Nagaland", "hi": "नागालैंड" },
+    "district": { "en": "Dimapur", "hi": "दीमापुर" },
+    "village": { "en": "Medziphema", "hi": "मेद्जीफेमा" },
+    "lat": 25.749,
+    "lng": 93.853
+  },
+  {
+    "state": { "en": "Nagaland", "hi": "नागालैंड" },
+    "district": { "en": "Mokokchung", "hi": "मोकोकचुंग" },
+    "village": { "en": "Ungma", "hi": "उंगमा" },
+    "lat": 26.323,
+    "lng": 94.516
+  },
+  {
+    "state": { "en": "Arunachal Pradesh", "hi": "अरुणाचल प्रदेश" },
+    "district": { "en": "Papum Pare", "hi": "पापुम पारे" },
+    "village": { "en": "Doimukh", "hi": "दोईमुख" },
+    "lat": 27.076,
+    "lng": 93.833
+  },
+  {
+    "state": { "en": "Arunachal Pradesh", "hi": "अरुणाचल प्रदेश" },
+    "district": { "en": "West Kameng", "hi": "पश्चिमी कामेंग" },
+    "village": { "en": "Bomdila", "hi": "बोमडिला" },
+    "lat": 27.264,
+    "lng": 92.426
+  },
+  {
+    "state": { "en": "Arunachal Pradesh", "hi": "अरुणाचल प्रदेश" },
+    "district": { "en": "Tawang", "hi": "तवांग" },
+    "village": { "en": "Tawang", "hi": "तवांग" },
+    "lat": 27.586,
+    "lng": 91.869
+  },
+  {
+    "state": { "en": "Mizoram", "hi": "मिजोरम" },
+    "district": { "en": "Aizawl", "hi": "आइजोल" },
+    "village": { "en": "Sairang", "hi": "सैरंग" },
+    "lat": 23.796,
+    "lng": 92.651
+  },
+  {
+    "state": { "en": "Mizoram", "hi": "मिजोरम" },
+    "district": { "en": "Champhai", "hi": "चम्फाई" },
+    "village": { "en": "Khawbung", "hi": "खावबुंग" },
+    "lat": 23.457,
+    "lng": 93.353
+  },
+  {
+    "state": { "en": "Mizoram", "hi": "मिजोरम" },
+    "district": { "en": "Lunglei", "hi": "लुंगलेई" },
+    "village": { "en": "Hnahthial", "hi": "हनथियाल" },
+    "lat": 22.985,
+    "lng": 92.933
+  },
+  {
+    "state": { "en": "Tripura", "hi": "त्रिपुरा" },
+    "district": { "en": "West Tripura", "hi": "पश्चिमी त्रिपुरा" },
+    "village": { "en": "Jirania", "hi": "जिरानिया" },
+    "lat": 23.866,
+    "lng": 91.446
+  },
+  {
+    "state": { "en": "Tripura", "hi": "त्रिपुरा" },
+    "district": { "en": "South Tripura", "hi": "दक्षिणी त्रिपुरा" },
+    "village": { "en": "Belonia", "hi": "बेलोनिया" },
+    "lat": 23.251,
+    "lng": 91.451
+  },
+  {
+    "state": { "en": "Tripura", "hi": "त्रिपुरा" },
+    "district": { "en": "Dhalai", "hi": "धलाई" },
+    "village": { "en": "Ambassa", "hi": "अम्बासा" },
+    "lat": 23.927,
+    "lng": 91.845
+  },
+  {
+    "state": { "en": "Sikkim", "hi": "सिक्किम" },
+    "district": { "en": "East Sikkim", "hi": "पूर्वी सिक्किम" },
+    "village": { "en": "Pakyong", "hi": "पाक्योंग" },
+    "lat": 27.226,
+    "lng": 88.615
+  },
+  {
+    "state": { "en": "Sikkim", "hi": "सिक्किम" },
+    "district": { "en": "West Sikkim", "hi": "पश्चिमी सिक्किम" },
+    "village": { "en": "Gyalshing", "hi": "ग्यालशिंग" },
+    "lat": 27.292,
+    "lng": 88.259
+  }
+]

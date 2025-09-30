@@ -4,8 +4,8 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
@@ -26,7 +26,13 @@ import kotlinx.coroutines.launch
 @Composable
 fun ReportSymptomsScreen(viewModel: SymptomViewModel, navController: NavController) {
     val symptoms = viewModel.symptoms
-    var additionalInfo by remember { mutableStateOf("") }
+    var personName by remember { mutableStateOf("") }
+    var age by remember { mutableStateOf("") }
+    var gender by remember { mutableStateOf("Male") }
+    var season by remember { mutableStateOf("Summer") }
+    var reportsInArea by remember { mutableStateOf("") }
+    var duration by remember { mutableStateOf("") }
+
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
 
@@ -34,68 +40,109 @@ fun ReportSymptomsScreen(viewModel: SymptomViewModel, navController: NavControll
         snackbarHost = { SnackbarHost(snackbarHostState) },
         containerColor = Color.White
     ) { padding ->
+        // Scrollable column
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(padding)
                 .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
+            verticalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             Text(
-                text = "Select Your Symptoms",
-                fontSize = 22.sp,
+                text = "Report Your Symptoms",
+                fontSize = 24.sp,
                 fontWeight = FontWeight.Bold,
                 color = Color(0xFF0D47A1),
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 12.dp)
             )
 
-            // ✅ Make symptom list scrollable
-            LazyColumn(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()
-            ) {
-                items(symptoms) { symptom ->
-                    SymptomCard(
-                        symptom = symptom,
-                        isSelected = symptom.isSelected,
-                        onClick = { viewModel.toggleSymptomSelection(symptom.id) }
-                    )
-                    Spacer(modifier = Modifier.height(12.dp))
-                }
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // ✅ Additional info with proper text color
+            // Person Name
             OutlinedTextField(
-                value = additionalInfo,
-                onValueChange = { additionalInfo = it },
-                label = { Text("Describe your symptoms (optional)") },
+                value = personName,
+                onValueChange = { personName = it },
+                label = { Text("Person Name", color = Color(0xFF0D47A1)) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
                 modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
                 colors = OutlinedTextFieldDefaults.colors(
                     focusedBorderColor = Color(0xFF1976D2),
-                    unfocusedBorderColor = Color.Gray,
-                    cursorColor = Color(0xFF1976D2),
-                    focusedLabelColor = Color(0xFF1976D2),
-                    focusedTextColor = Color.Black,
-                    unfocusedTextColor = Color.Black
+                    unfocusedBorderColor = Color.Gray
                 )
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            // Age
+            OutlinedTextField(
+                value = age,
+                onValueChange = { age = it },
+                label = { Text("Age of Patient", color = Color(0xFF0D47A1)) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.Gray
+                )
+            )
 
-            // ✅ Submit Button always visible
+            // Gender selection
+            Text("Gender", fontWeight = FontWeight.SemiBold, color = Color(0xFF0D47A1))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                listOf("Male", "Female", "Other").forEach { option ->
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier.padding(end = 16.dp)
+                    ) {
+                        RadioButton(
+                            selected = gender == option,
+                            onClick = { gender = option },
+                            colors = RadioButtonDefaults.colors(selectedColor = Color(0xFF1976D2))
+                        )
+                        Text(option, color = Color.Black)
+                    }
+                }
+            }
+
+            // Duration of symptoms
+            OutlinedTextField(
+                value = duration,
+                onValueChange = { duration = it },
+                label = { Text("Duration of Symptoms (days)", color = Color(0xFF0D47A1)) },
+                textStyle = LocalTextStyle.current.copy(color = Color.Black),
+                modifier = Modifier.fillMaxWidth(),
+                singleLine = true,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedBorderColor = Color(0xFF1976D2),
+                    unfocusedBorderColor = Color.Gray
+                )
+            )
+
+            // Symptoms list
+            Text(
+                text = "Select Symptoms",
+                fontSize = 18.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = Color(0xFF0D47A1),
+                modifier = Modifier.padding(top = 12.dp)
+            )
+
+            symptoms.forEach { symptom ->
+                SymptomCard(
+                    symptom = symptom,
+                    isSelected = symptom.isSelected,
+                    onClick = { viewModel.toggleSymptomSelection(symptom.id) }
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+            }
+
+            // Submit button
             Button(
                 onClick = {
-                    //navController.popBackStack()
                     scope.launch {
-                        snackbarHostState.showSnackbar("Data Submitted Successfully!")
+                        snackbarHostState.showSnackbar("Case Submitted Successfully!")
                         kotlinx.coroutines.delay(2000)
-
-                        // then close page
                         navController.popBackStack()
                     }
-
                 },
                 modifier = Modifier
                     .fillMaxWidth()
@@ -114,7 +161,6 @@ fun ReportSymptomsScreen(viewModel: SymptomViewModel, navController: NavControll
 
 @Composable
 fun SymptomCard(symptom: Symptom, isSelected: Boolean, onClick: () -> Unit) {
-    // ✅ Slightly darker light blue
     val targetColor = if (isSelected) Color(0xFFBBDEFB) else Color(0xFFF5F5F5)
     val animatedColor by animateColorAsState(targetValue = targetColor, label = "cardAnim")
 

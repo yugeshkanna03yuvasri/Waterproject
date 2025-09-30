@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Water Monitoring System</string>
+    <string name="asha_worker">आशा कार्यकर्ता</string>
+    <string name="phc">पीएचसी</string>
+    <string name="doctor">डॉक्टर</string>
+    <string name="no_contacts_found">%1$s के लिए कोई संपर्क नहीं मिला</string>
+    <string name="call">कॉल करें</string>
+    <string name="explore_initiatives">हमारी पहलों का अन्वेषण करे</string>
+    <string name="jal_jeevan_mission">जल जीवन \nमिशन</string>
+    <string name="jal_shakti_abhiyan">जल शक्ति\nअभियान</string>
+    <string name="swachh_bharat_abhiyan">स्वच्छ भारत\nअभियान</string>
+    <string name="national_water_mission">राष्ट्रीय जल\n;मिशन</string>
+    <string name="app_utilities">ऐप उपयोगिताएँ</string>
+    <string name="report_a_case">मामला रिपोर्ट करे</string>
+    <string name="sensor_data">सेंसर डेटा</string>
+    <string name="water_report">जल रिपोर्ट</string>
+    <string name="learn_and_prevent">सीखें और रोकें</string>
+    <string name="select_your_village">अपना गाँव चुनें</string>
+    <string name="ai">एआई</string>
+    <string name="language">भाषा</string>
+    <string name="profile">प्रोफ़ाइल</string>
+    <string name="app_title">जीवनरक्षा जल</string>
+    <string name="tagline">सुरक्षित भविष्य के लिए सक्रिय स्वास्थ्य निगरानी</string>
+    <string name="subtitle">सुरक्षित पानी, स्वसथ जीवन</string>
+    <string name="learn_more">और जानें</string>
+    <string name="health_contacts_for">%1$s के लिए स्वास्थ्य संपर्क</string>
+</resources>
